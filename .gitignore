@@ -1,0 +1,7 @@
+/.vscode
+/action_interface
+/franka_description
+/mppi_controller
+/mppi_solver
+/mujoco_ros2
+/rci_action_manager
