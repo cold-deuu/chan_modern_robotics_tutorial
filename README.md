@@ -14,6 +14,11 @@ After build this package, you can run the unit test with the command below:
 
 ```bash
 ros2 run rci_dynamics_library main
+```
+
+### Option 
+1. ForwardKinematics
+2. Compute Jacobians
 
 - - -
 ## To do List
