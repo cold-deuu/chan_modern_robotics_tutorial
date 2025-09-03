@@ -28,7 +28,14 @@ ament_target_dependencies(forward_kinematics
   Eigen3
   geometry_msgs
 )
-# target_link_libraries(robot_wrapper pinocchio::pinocchio)
+
+add_library(compute_jacobians src/kinematics/compute_jacobians.cpp)
+ament_target_dependencies(compute_jacobians
+  rclcpp
+  Eigen3
+  geometry_msgs
+)
+target_link_libraries(compute_jacobians forward_kinematics)
 
 add_library(fk_test src/unit_test/forward_kinematics/fk_test.cpp)
 ament_target_dependencies(fk_test 
@@ -54,10 +61,13 @@ ament_target_dependencies(fk_test
 # 라이브러리 묶기
 set(KINEMATICS
   forward_kinematics
+  compute_jacobians
 )
 
 set(UNIT_TEST_SRC
   src/unit_test/forward_kinematics/fk_test.cpp
+  src/unit_test/compute_jacobians/jacob_test.cpp
+
 )
 
 add_executable(main src/unit_test/unit_test_main.cpp ${UNIT_TEST_SRC})

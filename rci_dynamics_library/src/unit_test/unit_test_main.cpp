@@ -7,6 +7,7 @@
 
 // FK TESTER
 #include "rci_dynamics_library/unit_test/forward_kinematics/fk_test.hpp"
+#include "rci_dynamics_library/unit_test/compute_jacobians/jacob_test.hpp"
 
 int main(int argc, char * argv[])
 {
@@ -16,6 +17,7 @@ int main(int argc, char * argv[])
 
     std::cout << "Select Tester:\n";
     std::cout << "1. Forward Kinematics\n";
+    std::cout << "2. Compute Jacobians\n";
     std::cout << "Enter choice (number): ";
     int choice;
     std::cin >> choice;
@@ -25,6 +27,10 @@ int main(int argc, char * argv[])
         if (choice == 1)
         {
             node = std::make_shared<unit_test::Fk_Tester>();
+        }
+        else if (choice == 2)
+        {
+            node = std::make_shared<unit_test::Jacob_Tester>();
         }
         else
         {

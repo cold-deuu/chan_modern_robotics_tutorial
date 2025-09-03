@@ -39,6 +39,7 @@ class ForwardKinematics
         
         std::pair<pinocchio::SE3, std::vector<pinocchio::SE3>> compute_chain_kinematics(std::vector<Eigen::Vector3d> joint_trans, std::vector<Eigen::Matrix3d> joint_rot);
         pinocchio::SE3 fk_eef(Eigen::VectorXd q);
+        std::pair<pinocchio::SE3, std::vector<pinocchio::SE3>> fk_eef_v2(Eigen::VectorXd q);
 
         pinocchio::SE3 M_;
 

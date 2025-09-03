@@ -69,15 +69,43 @@ pinocchio::SE3 ForwardKinematics::fk_eef(Eigen::VectorXd q)
 {
     assert((omega_list_.size() == q.size()) && "joint_trans and joint_rot must be the same size");
     pinocchio::SE3 T = M_;
+
+    std::vector<pinocchio::SE3> exp_list;
+    exp_list.resize(q.size());
+
     for (std::size_t i = q.size(); i-- > 0; ) 
     {
         Eigen::Vector3d omega = omega_list_[i];
         Eigen::Vector3d v = v_list_[i];
         pinocchio::SE3 chain_T = rci_utils::exp6(v, omega, q(i));
         T = chain_T * T;
+        exp_list[i] = chain_T;
         // std::cout<<"omega \n"<<omega_list_[i].transpose()<<std::endl;
         // std::cout<<"v \n"<<v.transpose()<<std::endl;
     }
-
+    
     return T;
+}
+
+
+std::pair<pinocchio::SE3, std::vector<pinocchio::SE3>> ForwardKinematics::fk_eef_v2(Eigen::VectorXd q)
+{
+    assert((omega_list_.size() == q.size()) && "joint_trans and joint_rot must be the same size");
+    pinocchio::SE3 T = M_;
+
+    std::vector<pinocchio::SE3> exp_list;
+    exp_list.resize(q.size());
+
+    for (std::size_t i = q.size(); i-- > 0; ) 
+    {
+        Eigen::Vector3d omega = omega_list_[i];
+        Eigen::Vector3d v = v_list_[i];
+        pinocchio::SE3 chain_T = rci_utils::exp6(v, omega, q(i));
+        T = chain_T * T;
+        exp_list[i] = chain_T;
+        // std::cout<<"omega \n"<<omega_list_[i].transpose()<<std::endl;
+        // std::cout<<"v \n"<<v.transpose()<<std::endl;
+    }
+    
+    return std::make_pair(T, exp_list);
 }

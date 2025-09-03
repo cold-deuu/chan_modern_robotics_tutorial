@@ -234,4 +234,17 @@ namespace rci_utils
         return skew_screw;
     }
 
+    inline Eigen::MatrixXd compute_adj(pinocchio::SE3 se3)
+    {
+        Eigen::Matrix3d R = se3.rotation();
+        Eigen::Vector3d p = se3.translation();
+        Eigen::Matrix3d skew_p = skew(p);
+        Eigen::MatrixXd adj(6,6);
+        adj.setZero();
+        adj.topLeftCorner(3,3) = adj.bottomRightCorner(3,3) = R;
+        adj.topRightCorner(3,3) = skew_p * R;
+
+        return adj;
+    }
+
 }
